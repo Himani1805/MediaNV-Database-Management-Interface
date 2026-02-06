@@ -4,7 +4,7 @@ const api = axios.create({
   baseURL: 'https://medianv-database-management-interface.onrender.com/api',
   headers: {
     'Content-Type': 'application/json',
-    'x-api-key': import.meta.env.VITE_API_KEY
+    // 'x-api-key': import.meta.env.VITE_API_KEY
   }
 });
 
