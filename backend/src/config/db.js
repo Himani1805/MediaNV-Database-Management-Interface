@@ -2,28 +2,21 @@ import pkg from 'pg';
 const { Pool } = pkg;
 import 'dotenv/config';
 
-// Create a new pool instance using environment variables
+// Use the connectionString instead of individual params
 const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
+  connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false 
   }
 });
 
-// Event listener for successful connection
 pool.on('connect', () => {
   console.log('PostgreSQL Connection Pool established successfully');
 });
 
-// Event listener for unexpected errors on idle clients
 pool.on('error', (err) => {
   console.error('Unexpected error on idle PostgreSQL client', err);
-  process.exit(-1);
+  // Optional: Don't exit in production unless it's a fatal startup error
 });
 
-// Export the pool to be used in controllers/routes
 export default pool;
